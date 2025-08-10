@@ -1,0 +1,102 @@
+// canvas-shell.component.scss
+
+// Make entire component non-selectable by default
+:host {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+// Apply to all buttons and interactive elements
+button,
+.toolbar-container,
+.status-display {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+
+  // Prevent text selection on button text
+  * {
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+  }
+}
+
+// Canvas specific styles
+canvas {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+
+  // Prevent context menu on right click
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// Prevent text selection highlighting
+::selection {
+  background: transparent;
+}
+
+::-moz-selection {
+  background: transparent;
+}
+
+// Additional mobile touch handling
+* {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-tap-highlight-color: transparent; /* Remove tap highlight */
+}
+
+// Specific classes for different UI sections
+.ui-controls {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+
+  // Prevent drag behavior on emojis and icons
+  span,
+  i,
+  svg {
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+  }
+}
+
+// Ensure buttons don't show text cursor
+button {
+  cursor: pointer !important;
+
+  &:hover {
+    cursor: pointer !important;
+  }
+
+  &:active {
+    cursor: pointer !important;
+  }
+}
+
+// Canvas cursor styles based on tool
+.canvas-container {
+  &.pen-tool canvas {
+    cursor: crosshair;
+  }
+
+  &.rectangle-tool canvas {
+    cursor: copy;
+  }
+
+  &.drawing canvas {
+    cursor: none; // Hide cursor while drawing for cleaner experience
+  }
+}
