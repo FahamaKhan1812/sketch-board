@@ -1,3 +1,238 @@
-<div class="flex-1 relative">
-  <canvas #myCanvas class="absolute top-0 left-0 w-full h-full"></canvas>
+<!-- Tool Selection -->
+<div
+  class="flex justify-center items-center gap-2 my-3 p-2 bg-gray-100 rounded-lg"
+>
+  <span class="text-sm font-medium text-gray-700">Tools:</span>
+
+  <button
+    (click)="setTool('pen')"
+    class="px-3 py-2 rounded-md transition-all duration-200 flex items-center gap-1"
+    [class.bg-blue-500]="selectedTool() === 'pen'"
+    [class.text-white]="selectedTool() === 'pen'"
+    [class.bg-white]="selectedTool() !== 'pen'"
+    [class.text-gray-700]="selectedTool() !== 'pen'"
+    [class.shadow-md]="selectedTool() === 'pen'"
+    [class.hover:bg-gray-50]="selectedTool() !== 'pen'"
+  >
+    <span>✏️</span>
+    <span class="text-sm">Pen</span>
+  </button>
+
+  <button
+    (click)="setTool('rectangle')"
+    class="px-3 py-2 rounded-md transition-all duration-200 flex items-center gap-1"
+    [class.bg-blue-500]="selectedTool() === 'rectangle'"
+    [class.text-white]="selectedTool() === 'rectangle'"
+    [class.bg-white]="selectedTool() !== 'rectangle'"
+    [class.text-gray-700]="selectedTool() !== 'rectangle'"
+    [class.shadow-md]="selectedTool() === 'rectangle'"
+    [class.hover:bg-gray-50]="selectedTool() !== 'rectangle'"
+  >
+    <span>⬜</span>
+    <span class="text-sm">Rectangle</span>
+  </button>
+
+  <button
+    (click)="setTool('circle')"
+    class="px-3 py-2 rounded-md transition-all duration-200 flex items-center gap-1"
+    [class.bg-blue-500]="selectedTool() === 'circle'"
+    [class.text-white]="selectedTool() === 'circle'"
+    [class.bg-white]="selectedTool() !== 'circle'"
+    [class.text-gray-700]="selectedTool() !== 'circle'"
+    [class.shadow-md]="selectedTool() === 'circle'"
+    [class.hover:bg-gray-50]="selectedTool() !== 'circle'"
+  >
+    <span>⚪</span>
+    <span class="text-sm">Circle</span>
+  </button>
+
+  <button
+    (click)="setTool('line')"
+    class="px-3 py-2 rounded-md transition-all duration-200 flex items-center gap-1"
+    [class.bg-blue-500]="selectedTool() === 'line'"
+    [class.text-white]="selectedTool() === 'line'"
+    [class.bg-white]="selectedTool() !== 'line'"
+    [class.text-gray-700]="selectedTool() !== 'line'"
+    [class.shadow-md]="selectedTool() === 'line'"
+    [class.hover:bg-gray-50]="selectedTool() !== 'line'"
+  >
+    <span>📏</span>
+    <span class="text-sm">Line</span>
+  </button>
+
+   <button
+    (click)="setTool('arrow')"
+    class="px-3 py-2 rounded-md transition-all duration-200 flex items-center gap-1"
+    [class.bg-blue-500]="selectedTool() === 'arrow'"
+    [class.text-white]="selectedTool() === 'arrow'"
+    [class.bg-white]="selectedTool() !== 'arrow'"
+    [class.text-gray-700]="selectedTool() !== 'arrow'"
+    [class.shadow-md]="selectedTool() === 'arrow'"
+    [class.hover:bg-gray-50]="selectedTool() !== 'arrow'"
+  >
+    <span>🔼</span>
+    <span class="text-sm">Arrow</span>
+  </button>
+</div>
+
+<!-- Brush Controls -->
+<div class="flex justify-center items-center gap-2 my-3">
+  <button
+    (click)="clearCanvas()"
+    class="px-3 py-1 bg-red-500 text-white rounded cursor-pointer hover:bg-red-600 transition-colors"
+  >
+    🗑️ Clear
+  </button>
+
+  <button
+    (click)="undo()"
+    class="px-3 py-1 bg-gray-500 text-white rounded cursor-pointer hover:bg-gray-600 transition-colors"
+  >
+    ↶ Undo
+  </button>
+
+  <!-- Color buttons -->
+  <button
+    (click)="setBrushSettings('#000000', brushWidth())"
+    class="px-3 py-1 rounded transition-colors"
+    [class.bg-black]="brushColor() === '#000000'"
+    [class.text-white]="brushColor() === '#000000'"
+    [class.bg-gray-100]="brushColor() !== '#000000'"
+    [class.text-black]="brushColor() !== '#000000'"
+    [class.ring-2]="brushColor() === '#000000'"
+    [class.ring-black]="brushColor() === '#000000'"
+  >
+    ⚫ Black
+  </button>
+
+  <button
+    (click)="setBrushSettings('#ff0000', brushWidth())"
+    class="px-3 py-1 rounded transition-colors"
+    [class.bg-red-500]="brushColor() === '#ff0000'"
+    [class.text-white]="brushColor() === '#ff0000'"
+    [class.bg-red-100]="brushColor() !== '#ff0000'"
+    [class.text-red-500]="brushColor() !== '#ff0000'"
+    [class.ring-2]="brushColor() === '#ff0000'"
+    [class.ring-red-500]="brushColor() === '#ff0000'"
+  >
+    🔴 Red
+  </button>
+
+  <button
+    (click)="setBrushSettings('#00ff00', brushWidth())"
+    class="px-3 py-1 rounded transition-colors"
+    [class.bg-green-500]="brushColor() === '#00ff00'"
+    [class.text-white]="brushColor() === '#00ff00'"
+    [class.bg-green-100]="brushColor() !== '#00ff00'"
+    [class.text-green-500]="brushColor() !== '#00ff00'"
+    [class.ring-2]="brushColor() === '#00ff00'"
+    [class.ring-green-500]="brushColor() === '#00ff00'"
+  >
+    🟢 Green
+  </button>
+
+  <button
+    (click)="setBrushSettings('#0000ff', brushWidth())"
+    class="px-3 py-1 rounded transition-colors"
+    [class.bg-blue-500]="brushColor() === '#0000ff'"
+    [class.text-white]="brushColor() === '#0000ff'"
+    [class.bg-blue-100]="brushColor() !== '#0000ff'"
+    [class.text-blue-500]="brushColor() !== '#0000ff'"
+    [class.ring-2]="brushColor() === '#0000ff'"
+    [class.ring-blue-500]="brushColor() === '#0000ff'"
+  >
+    🔵 Blue
+  </button>
+</div>
+
+<!-- Brush Width Controls -->
+<div class="flex justify-center items-center gap-2 my-3">
+  <span class="text-sm text-gray-600">Size:</span>
+
+  <button
+    (click)="setBrushWidth(1)"
+    class="px-2 py-1 text-xs rounded"
+    [class.bg-blue-500]="brushWidth() === 1"
+    [class.text-white]="brushWidth() === 1"
+    [class.bg-gray-200]="brushWidth() !== 1"
+    [class.text-gray-700]="brushWidth() !== 1"
+  >
+    1px
+  </button>
+
+  <button
+    (click)="setBrushWidth(2)"
+    class="px-2 py-1 text-xs rounded"
+    [class.bg-blue-500]="brushWidth() === 2"
+    [class.text-white]="brushWidth() === 2"
+    [class.bg-gray-200]="brushWidth() !== 2"
+    [class.text-gray-700]="brushWidth() !== 2"
+  >
+    2px
+  </button>
+
+  <button
+    (click)="setBrushWidth(3)"
+    class="px-2 py-1 text-xs rounded"
+    [class.bg-blue-500]="brushWidth() === 3"
+    [class.text-white]="brushWidth() === 3"
+    [class.bg-gray-200]="brushWidth() !== 3"
+    [class.text-gray-700]="brushWidth() !== 3"
+  >
+    3px
+  </button>
+
+  <button
+    (click)="setBrushWidth(5)"
+    class="px-2 py-1 text-xs rounded"
+    [class.bg-blue-500]="brushWidth() === 5"
+    [class.text-white]="brushWidth() === 5"
+    [class.bg-gray-200]="brushWidth() !== 5"
+    [class.text-gray-700]="brushWidth() !== 5"
+  >
+    5px
+  </button>
+</div>
+
+<!-- Status Display -->
+<div class="flex justify-center items-center gap-4 text-sm text-gray-600 mb-2">
+  <div class="flex items-center gap-2">
+    <span>Current tool:</span>
+    <span class="font-medium"
+      >{{ toolInfo().icon }} {{ selectedTool() | titlecase }}</span
+    >
+  </div>
+
+  <div class="flex items-center gap-2">
+    <span>Brush:</span>
+    <div
+      class="w-4 h-4 rounded-full border border-gray-300"
+      [style.background-color]="brushColor()"
+    ></div>
+    <span>{{ brushWidth() }}px</span>
+  </div>
+
+  <div class="flex items-center gap-1">
+    <div
+      class="w-2 h-2 rounded-full transition-colors"
+      [class.bg-green-500]="isDrawing()"
+      [class.bg-gray-300]="!isDrawing()"
+    ></div>
+    <span>{{ isDrawing() ? "Drawing" : "Ready" }}</span>
+  </div>
+</div>
+
+<!-- Canvas Container -->
+<div style="width: 100%; height: 100vh; position: relative">
+  <canvas
+    #myCanvas
+    class="absolute top-0 left-0 w-full h-full"
+    [class.cursor-crosshair]="selectedTool() === 'pen'"
+    [class.cursor-copy]="selectedTool() === 'rectangle'"
+    style="touch-action: none"
+    (mousedown)="onMouseDown($event)"
+    (mousemove)="onMouseMove($event)"
+    (mouseup)="onMouseUp()"
+  >
+  </canvas>
 </div>
